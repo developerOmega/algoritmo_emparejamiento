@@ -1,3 +1,5 @@
+//Pareja1 = novias
+//Pareja2 = novios
 let novias = {
     alejandra: {
         id: 1,
@@ -92,48 +94,47 @@ let novios = {
 let objectNovias = Object.values(novias);
 let objectNovios = Object.values(novios);
 let empare = [];
-let count = objectNovias.length-1;
+let count = objectNovias.length-1;//Contado igual a numero de parejas1
 
-while(objectNovias.length > 0){
-    for(let e =0 ; e < objectNovios.length; e++){
+while(objectNovias.length > 0){ //Hay parejas1?
+    for(let e =0 ; e < objectNovios.length; e++){ //Ciclo para recorrer a todas las opciones existentes
         
-        if(objectNovias[count].preferencias[0] == objectNovios[e].id){
+        if(objectNovias[count].preferencias[0] == objectNovios[e].id){ //Comparar preferencia de pareja1 con opciones de pareja2
             
-            objectNovios[e].pareja.push(objectNovias[count]);
-            objectNovias.splice(count, 1);
+            objectNovios[e].pareja.push(objectNovias[count]); //pareja1 se empareja con pareja2
+            objectNovias.splice(count, 1);//se elimina la opcion de pareja1 de varible de parejas1
             
-            if(objectNovios[e].pareja.length > 1){
+            if(objectNovios[e].pareja.length > 1){//Comparar si la pareja2 tiene mas de dos parejas1
               
-                objectNovios[e].preferencias.forEach(dataPreferencias => {
+                objectNovios[e].preferencias.forEach(dataPreferencias => {//Ciclo de preferencias de pareja2
                    
-                    for(let i = 0; i < objectNovios[e].pareja.length; i++){
-                        if(dataPreferencias == objectNovios[e].pareja[i].id){
-                            
-                            let newPareja = objectNovios[e].pareja[i];
-                            let posp = objectNovios[e].pareja.splice(i,1);
-                            objectNovios[e].pareja[0].preferencias.shift();
+                    for(let i = 0; i < objectNovios[e].pareja.length; i++){//Ciclo de parejas1 pertenecientes a pareja2
+                        if(dataPreferencias == objectNovios[e].pareja[i].id){//Comparar si preferencia de pareja2 coinicide con pareja1 del ciclo
+                            let newPareja = objectNovios[e].pareja[i];//Almacenar pareja1 de posicion de array 'i' en varible newPareja
+                            let posp = objectNovios[e].pareja.splice(i,1);//Obtener los elementos restantes de parejas1 elimiando pareja1 de posicion de array 'i'
+                            objectNovios[e].pareja[0].preferencias.shift();//Eliminar primer preferencia de pareja1[0] perteneciente a pareja2
 
-                            objectNovias.push(objectNovios[e].pareja[0]);
-                            objectNovios[e].pareja = [];
-                            objectNovios[e].pareja.push(newPareja);
-                            count++;
-                            break;
+                            objectNovias.push(objectNovios[e].pareja[0]);//Almacenar pareja1[0] perteneciente a pareja2  en varible de parejas1 
+                            objectNovios[e].pareja = [];//parejas1 de parejas2 es array bacio 
+                            objectNovios[e].pareja.push(newPareja);//Almacenar variable newPareja en parejas1 de parejas2
+                            count++;//Contador sumatorio
+                            break;//Romper ciclo de parejas1 de pareja2
 
                         }
                     }
 
-                    if(objectNovios[e].pareja.length <= 1){
-                        return;
+                    if(objectNovios[e].pareja.length <= 1){ //Comparar si hay menos o igual de parejas1 perteneciente a pareja2
+                        return;//Romper ciclo de preferencias de pareja2
                     }
 
                 });
 
             }
-            break;
+            break;//Romper ciclo de parejas1
         }
     }   
 
-    count--;
+    count--;//Contador restante
 }
 
 for(let l =0 ; l < objectNovios.length; l++){
